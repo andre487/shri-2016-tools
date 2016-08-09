@@ -4,289 +4,425 @@ layout: default
 
 ---
 
-# Яндекс
+# &nbsp;
+
+<img src="pictures/hand.png" height="100%">
 
 ## **{{ site.presentation.title }}** {#cover}
 
-<div class="s">
-    <div class="service">{{ site.presentation.service }}</div>
-</div>
-
-{% if site.presentation.nda %}
-<div class="nda"></div>
-{% endif %}
-
 <div class="info">
-	<p class="author">{{ site.author.name }}, <br/> {{ site.author.position }}</p>
+	<p class="author">{{ site.author.name }}</p>
 </div>
 
-## Верхний колонтитул
+## Инструменты
+
+<center>
+  <img src="pictures/workbench.jpg" height="450">
+</center>
+
+## Джентльменский набор
+
+  * Удобный редактор или IDE, тысячи их
+  * VCS: Git, Mercurial, <s>svn</s>
+  * Терминал
+  * Статический анализ:
+    * JavaScript: ESLint, JSHint, JSCS
+    * CSS: stylelint, CSSComb
+  * Инструменты разработчика в браузерах
+  * Инструменты для работы с графикой
+
+## Мобильная специфика
+
+Всё как 10 лет назад:
+
+  * Плохие сети
+  * Cлабое железо
+  * Нет удобств для разработчика
+
+## Повестка дня
+
+  * Как разрабатывать без мобильного?
+  * Как пробросить проект в устройство?
+  * Как пробраться в мобильный браузер?
+  * Что, если нужно устройство, но его не найти?
+
+## &nbsp;
 {:.section}
 
-### Название раздела
+### Как разрабатывать без мобильного?
 
-## Заголовок
+## Chromium
+{:.screen-shot}
 
-### Вводный текст (первый уровень текста)
+<center>
+  <img src="pictures/chrome.png" height="530">
+</center>
 
-*  Второй уровень текста
-	* Третий уровень текста (буллиты)
+## Chromium
+{:.screen-shot}
 
-	1. Четвертый уровень текста
+<center>
+  <img src="pictures/chrome-emulation.png" height="530">
+</center>
 
-## Заголовок
+## MS Edge
+{:.screen-shot}
 
-### Вводный текст (первый уровень текста)
-![placeholder](pictures/vertical-placeholder.png){:.right-image}
+<center>
+  <img src="pictures/edge.png" height="500">
+</center>
 
-*  Второй уровень текста
-	* Третий уровень текста (буллиты)
-	* Третий уровень текста (буллиты)
+## Firefox
+{:.screen-shot}
 
-	1. Четвертый уровень текста
-
-## &nbsp;
-{:.with-big-quote}
-> Цитата
-
-Текст
-{:.note}
-
-## Пример подсветки кода на JavaScript
-
-~~~ javascript
-!function() {
-    var jar,
-        rstoreNames = /[^\w]/g,
-        storageInfo = window.storageInfo || window.webkitStorageInfo,
-        toString = "".toString;
-
-    jar = this.jar = function( name, storage ) {
-        return new jar.fn.init( name, storage );
-    };
-
-    jar.storages = [];
-    jar.instances = {};
-    jar.prefixes = {
-        storageInfo: storageInfo
-    };
-
-    jar.prototype = this.jar.fn = {
-        constructor: jar,
-
-        version: 0,
-
-        storages: [],
-        support: {},
-
-        types: [ "xml", "html", "javascript", "js", "css", "text", "json" ],
-
-        init: function( name, storage ) {
-
-            // Name of a object store must contain only alphabetical symbols or low dash
-            this.name = name ? name.replace( rstoreNames, "_" ) : "jar";
-            this.deferreds = {};
-
-            if ( !storage ) {
-                this.order = jar.order;
-            }
-
-            // TODO – add support for aliases
-            return this.setup( storage || this.storages );
-        },
-
-        // Setup for all storages
-        setup: function( storages ) {
-            this.storages = storages = storages.split ? storages.split(" ") : storages;
-
-            var storage,
-                self = this,
-                def = this.register(),
-                rejects = [],
-                defs = [];
-
-            this.stores = jar.instances[ this.name ] || {};
-
-            // Jar store meta-info in lc, if we don't have it – reject call
-            if ( !window.localStorage ) {
-                window.setTimeout(function() {
-                    def.reject();
-                });
-                return this;
-            }
-
-            // Initiate all storages that we can work with
-            for ( var i = 0, l = storages.length; i < l; i++ ) {
-                storage = storages[ i ];
-
-                // This check needed if user explicitly specified storage that
-                // he wants to work with, whereas browser don't implement it
-                if ( jar.isUsed( storage ) ) {
-
-                    // If jar with the same name was created, do not try to re-create store
-                    if ( !this.stores[ storage ] ) {
-
-                        // Initiate storage
-                        defs.push( this[ storage ]( this.name, this ) );
-
-                        // Initiate meta-data for this storage
-                        this.log( storage );
-                    }
-
-                } else {
-                    rejects.push( storage );
-                }
-            }
-
-            if ( !this.order ) {
-                this.order = {};
-
-                for ( i = 0, l = this.types.length; i < l; i++ ) {
-                    this.order[ this.types[ i ] ] = storages;
-                }
-            }
-
-            if ( rejects.length == storages.length ) {
-                window.setTimeout(function() {
-                    def.reject();
-                });
-
-            } else {
-                jar.when.apply( this, defs )
-                    .done(function() {
-                        jar.instances[ this.name ] = this.stores;
-
-                        window.setTimeout(function() {
-                            def.resolve([ self ]);
-                        });
-                    })
-                    .fail(function() {
-                        def.reject();
-                    });
-            }
-            return this;
-        }
-    };
-
-    jar.fn.init.prototype = jar.fn;
-
-    jar.has = function( base, name ) {
-        return !!jar.fn.meta( name, base.replace( rstoreNames, "_" ) );
-    };
-}.call( window );
-~~~
-
-## Пример подсветки кода
-{:.code-with-text}
-
-Вводный текст
-
-~~~ javascript
-var jar,
-    rstoreNames = /[^\w]/g,
-    storageInfo = window.storageInfo || window.webkitStorageInfo,
-    toString = "".toString;
-
-jar = this.jar = function( name, storage ) {
-    return new jar.fn.init( name, storage );
-};
-~~~
+<center>
+  <img src="pictures/firefox.png" height="570">
+</center>
 
 ## &nbsp;
-{:.big-code}
+{:.section}
 
-~~~ javascript
-!function() {
-    var jar,
-        rstoreNames = /[^\w]/g,
-        storageInfo = window.storageInfo || window.webkitStorageInfo,
-        toString = "".toString;
+### Как пробросить проект в устройство?
 
-    jar = this.jar = function( name, storage ) {
-        return new jar.fn.init( name, storage );
-    };
+## Варианты
 
-    jar.storages = [];
-    jar.instances = {};
-    jar.prefixes = {
-        storageInfo: storageInfo
-    };
-}.call( window );
+  * Открыть напрямую: `http://192.168.1.100`
+  * Туннелирование:
+    * localtunnel
+    * ngrok
+    * SSH туннель
+
+## Открыть напрямую
+
+<img src="pictures/network-diagram.png">
+
+## Туннелирование
+
+<img src="pictures/tunnel-diagram.png">
+
+
+
+## localtunnel
+
+[github.com/localtunnel/localtunnel](https://github.com/localtunnel/localtunnel)
+
+&nbsp;
+&nbsp;
+
+  * `npm install localtunnel`
+  * `lt --port 8487`
+  * Получаем URL в Интернете: `http://ipnhrxfvkt.localtunnel.me`
+
+
+## ngrok
+
+[ngrok.com](https://ngrok.com/)
+
+
+&nbsp;
+&nbsp;
+
+  * Скачать, распаковать
+  * `ngrok http 8487`
+  * Получаем URL в Интернете:
+    * `http://a3c04d5b.ngrok.io`
+    * `https://a3c04d5b.ngrok.io`
+
+## SSH туннель
+
+На UNIX-like системах присутствует по умолчанию
+
+  * `ssh -N -R 8487:localhost:8487 my-server.me`
+  * Открываем `my-server.me:8487`
+
+В Windows можно воспользоваться PuTTY
+
+## &nbsp;
+{:.section}
+
+### Как пробраться в мобильный браузер?
+
+## Как пробраться в мобильный браузер?
+{:.section}
+
+### Отладка по USB
+
+## Отладка по USB
+
+![](pictures/android-usb-connection.jpg){:.right-image}
+
+  * Chromium
+  * Safari
+  * Firefox
+
+## Chromium
+{:.screen-shot}
+
+<center>
+  <img src="pictures/chromium-debug.png" height="570">
+</center>
+
+## Safari
+{:.screen-shot}
+
+<center>
+  <img src="pictures/safari-debug.png" height="570">
+</center>
+
+## Минусы
+
+Хорошо и везде работает отладка Android 4.4+ в Chromium
+
+Хорошо на macOS работает отладка iOS 6+ в Safari
+
+А другие сочетания?
+
+...Неплохо работает отладка Firefox, но это нечасто нужно
+
+## ios-webkit-debug-proxy
+
+Позволяет отлаживать iOS в Chromium
+
+&nbsp;
+&nbsp;
+
+Проект:
+
+  * <span style="color: #666">MaxOS, Linux:</span> [ios-webkit-debug-proxy](https://github.com/google/ios-webkit-debug-proxy)
+  * <span style="color: #666">Windows:</span> [ios-webkit-debug-proxy-win32](https://github.com/artygus/ios-webkit-debug-proxy-win32)
+
+## Как пробраться в мобильный браузер?
+{:.section}
+
+### Встраиваемые отладчики
+
+## Встраиваемые отладчики
+
+  * Vorlon.JS
+  * weinre
+  * Firebug light
+
+## Vorlon.JS
+
+[github.com/MicrosoftDX/Vorlonjs](https://github.com/MicrosoftDX/Vorlonjs)
+
+&nbsp;
+&nbsp;
+
+Установить, запустить:
+
+~~~
+$ npm install vorlon
+$ vorlon
 ~~~
 
-## LaTeX
+Подключить к странице:
 
-Библиотека для латекса довольно тяжелая, а нужна она в редких случаях.
-Поэтому она не включена в репу, ее нужно либо установить через bower либо иметь интернет.
+~~~
+<script src="http://localhost:1337/vorlon.js"></script>
+~~~
 
-When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+## Vorlon.JS с туннелем
 
-## Заголовок
-{:.images}
+~~~
+$ lt --port 1337
+~~~
 
-![](pictures/horizontal-placeholder.png)
-*Текст*
+~~~
+http://quahpivgsm.localtunnel.me/vorlon.js
+~~~
 
-![](pictures/horizontal-placeholder.png)
-*Текст*
+## Vorlon.JS
+{:.screen-shot}
 
-![](pictures/horizontal-placeholder.png)
-*Текст*
+<center>
+  <img src="pictures/vorlon.png" height="570">
+</center>
 
-## Заголовок
-{:.images .two}
+## Vorlon.JS
 
-![](pictures/horizontal-middle-placeholder.png)
-*Текст*
+Интересные фичи:
 
-![](pictures/horizontal-middle-placeholder.png)
-*Текст*
+  * DOM Explorer
+  * Network Monitoring
+  * Resource Explorer
+  * My Device
+  * Плагины
 
-## Заголовок
-{:.center}
+## Vorlon.JS
+{:.screen-shot}
 
-![](pictures/horizontal-big-placeholder.png){:.tmp}
+<center>
+  <img src="pictures/vorlon-dom-explorer.png" height="520">
+</center>
 
-## **![](pictures/cover-placeholder.png)**
+## Vorlon.JS
+{:.screen-shot}
 
-## ![](pictures/horizontal-cover-placeholder.png)
-{:.cover}
+<center>
+  <img src="pictures/vorlon-net.png" width="900">
+</center>
 
-## Таблица
+## Vorlon.JS
+{:.screen-shot}
 
-|  Locavore      | Umami       | Helvetica | Vegan     |
-+----------------|-------------|-----------|-----------+
-| Fingerstache   | Kale        | Chips     | Keytar    |
-| Sriracha       | Gluten-free | Ennui     | Keffiyeh  |
-| Thundercats    | Jean        | Shorts    | Biodiesel |
-| Terry          | Richardson  | Swag      | Blog      |
-+----------------|-------------|-----------|-----------+
+<center>
+  <img src="pictures/vorlon-resources.png" width="900">
+</center>
 
+## Vorlon.JS
+{:.screen-shot}
 
-## Таблица с дополнительным полем
+<center>
+  <img src="pictures/vorlon-device-info.png" width="900">
+</center>
 
-{:.with-additional-line}
-|  Locavore      | Umami       | Helvetica | Vegan     |
-+----------------|-------------|-----------|-----------+
-| Fingerstache   | Kale        | Chips     | Keytar    |
-| Sriracha       | Gluten-free | Ennui     | Keffiyeh  |
-| Thundercats    | Jean        | Shorts    | Biodiesel |
-| Terry          | Richardson  | Swag      | Blog      |
-+----------------|-------------|-----------|-----------+
-| Terry          | Richardson  | Swag      | Blog      |
+## Vorlon.JS
 
-## **Контакты** {#contacts}
+Расширяем: [www.vorlonjs.io/plugins](http://www.vorlonjs.io/plugins/)
 
-<div class="info">
-<p class="author">{{ site.author.name }}</p>
-<p class="position">{{ site.author.position }}</p>
+## Vorlon.JS
+{:.screen-shot}
 
-    <div class="contacts">
-        <p class="contacts-left contacts-top phone">+7 (000) 000-00-00</p>
-        <p class="contacts-left mail">почта@yandex-team.ru</p>
-        <p class="contacts-right contacts-top twitter">@twitter</p>
-        <!-- <p class="contacts-right contacts-bottom vk">vk</p> -->
-        <p class="contacts-right facebook">facebook</p>
-    </div>
-</div>
+<center>
+  <img src="pictures/vorlon-plugins.png" width="900">
+</center>
+
+## weinre
+
+[people.apache.org/~pmuellr/weinre](http://people.apache.org/~pmuellr/weinre)
+
+&nbsp;
+&nbsp;
+
+~~~
+$ npm install weinre
+$ weinre
+$ lt --port 8080
+~~~
+
+~~~
+<script
+src="http://lthost/target/target-script-min.js#anonymous">
+</script>
+~~~
+
+## weinre
+{:.screen-shot}
+
+<center>
+  <img src="pictures/weinre.png" height="570">
+</center>
+
+## Firebug light
+
+[getfirebug.com/firebuglite](http://getfirebug.com/firebuglite)
+
+&nbsp;
+&nbsp;
+
+~~~
+<script
+src="https://getfirebug.com/firebug-lite.js#startOpened">
+</script>
+~~~
+
+## Firebug light
+{:.screen-shot}
+
+<center>
+  <img src="pictures/firebug-light.png" height="510">
+</center>
+
+## &nbsp;
+{:.section}
+
+### Что, если нужно устройство, но его не найти?
+
+## Эмуляторы
+
+<table style="text-align: center">
+  <tr style="padding: 10px !important">
+    <td>Android</td>
+    <td>iOS</td>
+    <td>Windows Phone</td>
+  </tr>
+  <tr style="padding: 10px !important">
+    <td style="vertical-align: middle"><img src="pictures/android-studio.png" width="190"></td>
+    <td style="vertical-align: middle"><img src="pictures/xcode.jpg" width="120"></td>
+    <td style="vertical-align: middle"><img src="pictures/windows-phone-logo.png" width="105"></td>
+  </tr>
+  <tr style="padding: 10px !important">
+    <td>Android Studio</td>
+    <td>XCode</td>
+    <td>Windows Phone emulator</td>
+  </tr>
+</table>
+
+## BrowserStack
+
+[browserstack.com](https://www.browserstack.com)
+
+&nbsp;
+&nbsp;
+
+Тестирование в реальных браузерах
+
+&nbsp;
+&nbsp;
+
+<img src="pictures/browserstack-form.png" height="300">
+
+## BrowserStack
+{:.screen-shot}
+
+<img src="pictures/browserstack.png" height="570">
+
+## Smartphone Test Farm
+
+[github.com/openstf/stf](https://github.com/openstf/stf)
+
+&nbsp;
+&nbsp;
+
+Удалённое тестирование в устройствах
+
+«Свой BrowserStack»
+
+## Smartphone Test Farm
+{:.screen-shot}
+
+<center>
+  <img src="pictures/stf.gif" height="530">
+</center>
+
+## &nbsp;
+{:.section}
+
+### Заключение
+
+## Проблемы и решения
+
+<table>
+  <tr>
+    <td>Как разрабатывать без мобильного?</td>
+    <td>Инструменты браузеров</td>
+  </tr>
+  <tr>
+    <td>Как пробросить проект в устройство?</td>
+    <td>localtunnel, ngrok, SSH</td>
+  </tr>
+  <tr>
+    <td>Как пробраться в мобильный браузер?</td>
+    <td>USB-отладка, Vorlon.JS, Firebug light</td>
+  </tr>
+  <tr>
+    <td>Что, если нужно устройство, но его не найти?</td>
+    <td>Эмуляторы, BrowserStack</td>
+  </tr>
+</table>
+
+## &nbsp;
+{:.section}
+
+### Спасибо за внимание!
